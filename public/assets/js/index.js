@@ -45,8 +45,7 @@ document
         body: JSON.stringify(data),
       });
 
-      const responseBody = await response.text();
-      console.log(responseBody, "response");
+      await response.text();
 
       // Reset form fields
       resetFormFields();
@@ -87,7 +86,7 @@ const showSuccessModal = () => {
   // Close the modal after 3 seconds
   setTimeout(() => {
     successModal.classList.add("hidden");
-  }, 3000);
+  }, 1000);
 };
 
 // Get modal, modal overlay
@@ -117,13 +116,11 @@ const showErrorModal = (errorMessage) => {
 const populateYears = async () => {
   try {
     const response = await fetch("/api/years");
-    console.log(response, "response");
     const years = await response.json();
-    const updated_years = ["", ...years];
     const selectYear = document.getElementById("submitted_year");
-    selectYear.innerHTML = ""; // Clear existing options
+    selectYear.innerHTML = "<option value='' selected disabled>Select Year</option>"; // Set default empty option
 
-    updated_years.forEach((year) => {
+    years.forEach((year) => {
       const option = document.createElement("option");
       option.value = year;
       option.textContent = year;
@@ -134,6 +131,7 @@ const populateYears = async () => {
   }
 };
 
+
 // Call the populateYears function when the page loads
 populateYears();
 
@@ -142,11 +140,13 @@ async function populateCampaigns() {
   try {
     const response = await fetch("/api/campaigns");
     const campaigns = await response.json();
-    const updated_campaigns = ["", ...campaigns];
+    console.log(campaigns, "campaigns");
+    const remove_git_keep = campaigns.filter((item) => item !== ".gitkeep");
+    
     const selectCampaign = document.getElementById("submitted_campaign_name");
-    selectCampaign.innerHTML = ""; // Clear existing options
+    selectCampaign.innerHTML = "<option value='' selected disabled>Select Campaign</option>"; // Set default empty option
 
-    updated_campaigns.forEach((campaign) => {
+    remove_git_keep.forEach((campaign) => {
       const option = document.createElement("option");
       option.value = campaign;
       option.textContent = campaign;
