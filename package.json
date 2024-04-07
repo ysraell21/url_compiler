@@ -1,0 +1,23 @@
+{
+    "name": "url_compiler_datawords",
+    "version": "1.0.0",
+    "main": "index.js",
+    "scripts": {
+      "start": "nodemon server.js",
+      "test": "echo \"Error: no test specified\" && exit 1",
+      "watch": " yarn tailwindcss -i ./src/input.css -o ./public/assets/css/styles.css --watch"
+    },
+    "keywords": [],
+    "author": "ysraell21",
+    "license": "ISC",
+    "description": "",
+    "dependencies": {
+      "body-parser": "^1.20.2",
+      "csv-parse": "^5.5.5",
+      "csv-parser": "^3.0.0",
+      "csv-writer": "^1.6.0",
+      "express": "^4.19.2",
+      "fs-extra": "^11.2.0"
+    }
+  }
+  

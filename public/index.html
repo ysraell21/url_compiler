@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <!-- Add Tailwind CSS CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Add Font Awesome CDN -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-gray-100">
+
+  <!-- Success Modal -->
+  <div id="successModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen">
+      <!-- Modal overlay -->
+      <div id="successModalOverlay" class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" aria-hidden="true">
+      </div>
+
+      <!-- Modal content -->
+      <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div class="text-center">
+          <h3 class="text-lg font-semibold mb-4 text-green-500">Success</h3>
+          <p class="text-green-500">Data successfully added.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Error Msg Modal -->
+  <div id="errorModal" class="fixed z-10 inset-0 overflow-y-auto hidden">
+    <div class="flex items-center justify-center min-h-screen">
+      <!-- Modal overlay -->
+      <div id="modalOverlay" class="fixed inset-0 bg-black bg-opacity-50 transition-opacity" aria-hidden="true"></div>
+
+      <!-- Modal content -->
+      <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <div class="text-center">
+          <h3 class="text-lg font-semibold mb-4 text-red-500">Error</h3>
+          <p id="modalErrorMessage" class="text-red-500"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col md:flex-row justify-center items-start min-h-screen p-8">
+    <form class="w-full max-w-lg bg-white shadow-md rounded-lg p-8 mb-8 md:mr-4 md:mb-0">
+      <h2 class="font-bold text-4xl mb-5">Data Collection and Restoration</h2>
+
+      <div class="mb-6 flex items-center flex-col md:flex-row">
+        <label for="local_id" class="text-gray-700 text-sm font-bold md:w-32 mb-2 md:mb-0">Local ID</label>
+        <input type="text" id="local_id" placeholder="Enter Local ID"
+          class="w-full md:w-auto bg-gray-100 text-xl text-[#555] font-medium border border-gray-300 rounded-lg py-2 px-10 focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2">
+      </div>
+
+      <div class="mb-6 flex items-center flex-col md:flex-row">
+        <label for="campaign_name" class="text-gray-700 text-sm font-bold md:w-32 mb-2 md:mb-0">Campaign Name</label>
+        <input type="text" id="campaign_name" placeholder="Enter Campaign Name"
+          class="w-full md:w-auto bg-gray-100 text-xl text-[#555] font-medium border border-gray-300 rounded-lg py-2 px-10 focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2">
+      </div>
+
+      <div class="mb-6 flex items-center flex-col md:flex-row">
+        <label for="content_type" class="text-gray-700 text-sm font-bold md:w-32 mb-2 md:mb-0">Content Type</label>
+        <input type="text" id="content_type" placeholder="Enter Content Type"
+          class="w-full md:w-auto bg-gray-100 text-xl text-[#555] font-medium border border-gray-300 rounded-lg py-2 px-10 focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2">
+      </div>
+
+      <div class="mb-6 flex items-center flex-col md:flex-row">
+        <label for="asset_id" class="text-gray-700 text-sm font-bold md:w-32 mb-2 md:mb-0">Asset ID</label>
+        <input type="text" id="asset_id" placeholder="Enter Asset ID"
+          class="w-full md:w-auto bg-gray-100 text-xl text-[#555] font-medium border border-gray-300 rounded-lg py-2 px-10 focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2">
+      </div>
+
+      <div class="mb-6 flex items-center flex-col md:flex-row">
+        <label for="catalog_id" class="text-gray-700 text-sm font-bold md:w-32 mb-2 md:mb-0">Catalog ID</label>
+        <input type="text" id="catalog_id" placeholder="Enter Catalog ID"
+          class="w-full md:w-auto bg-gray-100 text-xl text-[#555] font-medium border border-gray-300 rounded-lg py-2 px-10 focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2">
+      </div>
+
+      <div class="mb-6 flex items-center flex-col md:flex-row">
+        <label for="stg_url" class="text-gray-700 text-sm font-bold md:w-32 mb-2 md:mb-0">Stg URL</label>
+        <input type="text" id="stg_url" placeholder="Enter Stg URL"
+          class="w-full md:w-auto bg-gray-100 text-xl text-[#555] font-medium border border-gray-300 rounded-lg py-2 px-10 focus:outline-none focus:ring-2 focus:ring-blue-400 ml-2">
+      </div>
+
+
+
+      <div class="flex justify-end items-center">
+        <button type="submit" id="btn_add"
+          class="text-green-500 border border-green-500 hover:bg-green-500 hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Add</button>
+      </div>
+    </form>
+
+    <form class="bg-white shadow-md rounded-lg p-8">
+      <h2 class="font-bold text-4xl mb-5">Submitted Data</h2>
+
+      <div class="mb-6 flex flex-col md:flex-row items-center">
+        <!-- <input type="text" id="submitted_campaign_name" placeholder="Enter Campaign Name"
+          class="bg-gray-100 text-xl text-[#555] font-medium border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 md:mr-2 mb-2 md:mb-0"> -->
+        <select id="submitted_campaign_name"
+          class="bg-gray-100 text-xl text-[#555] font-medium border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 md:mr-2 mb-2 md:mb-0">
+          <option value="" disabled>Select Campaign Name</option>
+        </select>
+
+        <!-- Year field -->
+        <select id="submitted_year"
+          class="bg-gray-100 text-xl text-[#555] font-medium border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-400 md:mr-2 mb-2 md:mb-0">
+          <option value="" disabled>Select Year</option>
+        </select>
+        <button type="submit"
+          class="text-blue-500 border border-blue-500 hover:bg-blue-500 hover:text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline md:mb-0">Search</button>
+      </div>
+      <br>
+      <div class="border-2 border-teal-300 border-double">
+        Generated CSV:
+        <!-- Add a link to download the CSV file -->
+        <a id="downloadLink" class="ml-5" href="#" download="data.csv">name of the csv file</a>
+      </div>
+    </form>
+
+
+
+
+  </div>
+
+  <script type="module" src="./assets/js/index.js"></script>
+
+</body>
+
+</html>
