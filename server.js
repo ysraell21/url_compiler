@@ -9,8 +9,8 @@ const app = express();
 const port = 1747;
 
 app.use(bodyParser.json());
-app.use(express.static("public")); // Serve your static files
-
+app.use(express.static(".")); // Serve your static files
+app.get("/favicon.ico", (req, res) => res.status(204));
 // Function to append data to a CSV file or create a new one if it doesn't exist
 async function appendDataToCsv(fileName, records) {
   const filePath = `./generated_csv/${fileName}.csv`;

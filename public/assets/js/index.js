@@ -120,7 +120,6 @@ const populateYears = async () => {
     console.log(response, "response");
     const years = await response.json();
     const updated_years = ["", ...years];
-    console.log(updated_years, "years");
     const selectYear = document.getElementById("submitted_year");
     selectYear.innerHTML = ""; // Clear existing options
 
